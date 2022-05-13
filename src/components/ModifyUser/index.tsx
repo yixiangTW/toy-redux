@@ -1,15 +1,23 @@
 import { connect } from '../../Redux'
 import './style.css'
 
-const ModifyUser = connect()(({state, dispatch}: {state: any, dispatch: any}) => {
+const ModifyUser = connect(undefined, (dispatch) => {
+  return {
+    updateUser: (uname: string) => dispatch({type: 'UpdateUser', payload: {name: uname}})
+  }
+})(({state, updateUser}: {state: any, updateUser: any}) => {
+
+  // const handleClick = (e: any) => {
+  //   dispatch({
+  //     type: 'UpdateUser',
+  //     payload: {
+  //       name: e.target.value
+  //     }
+  //   })
+  // }
 
   const handleClick = (e: any) => {
-    dispatch({
-      type: 'UpdateUser',
-      payload: {
-        name: e.target.value
-      }
-    })
+    updateUser(e.target.value)
   }
 
   return (

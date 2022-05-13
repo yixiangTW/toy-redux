@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Connect } from './type'
+import { Connect, Store, Reducer, CreateStore, InitState, MapDispatchToProps } from './type'
 
-let state: any;
-let reducer: any = null;
+let state: InitState;
+let reducer: Reducer<InitState>;
 let listeners: any = [];
 
-const store = {
+const store: Store = {
   getState: () => state,
-  dispatch: (_action: any) => {
+  dispatch: (_action) => {
     setState(reducer(state, _action))
   },
-  subscribe: (fn: any) => {
+  subscribe: (fn) => {
     listeners.push(fn);
     return () => {
       const index = listeners.indexOf(fn)
@@ -19,17 +19,17 @@ const store = {
   }
 }
 
-const setState = (_state: any) => {
+const setState = (_state: InitState) => {
   state = _state
   listeners.map((fn: any) => fn(_state))
 }
-const Context = React.createContext(null)
+const Context = React.createContext({})
 
-export const Provider = ({ store, children }: { store: any, children: any}) => {
+export const Provider = ({ store, children }: { store: Store, children: any}) => {
   return <Context.Provider value={store}>{children}</Context.Provider>
 }
 
-export const createStore = (_reducer: any, _init: any) => {
+export const createStore: CreateStore<InitState> = (_reducer, _init) => {
   reducer = _reducer;
   state = _init;
   return store
@@ -44,7 +44,7 @@ const isStateChange = (oldState: any, newState: any) => {
   return false
 }
 
-export const connect: Connect = (mapStateToProps, mapDispatchToProps) => (Component: any) => (props: any) => {
+export const connect: Connect = (mapStateToProps, mapDispatchToProps?: MapDispatchToProps) => (Component: React.FC) => (props: any) => {
   
   const [, reRender] = useState({})
   const stateProps = mapStateToProps ? mapStateToProps(state) : { state: state}
