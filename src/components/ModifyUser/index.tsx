@@ -74,8 +74,8 @@ const ModifyUser = connect()(
           }}
         >
           {onChangeDisable ? "启用" : "禁用"}onChange
-        </button>
-        <button onClick={handleAsyncFnClick}>修改 使用redux-thunk</button>
+        </button><br/>
+        <button onClick={handleAsyncFnClick}>修改 使用redux-thunk</button><br/>
         <button onClick={handlePromiseClick}>修改 使用redux-promise</button>
       </div>
     );
