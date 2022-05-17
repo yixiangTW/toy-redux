@@ -14,7 +14,7 @@ export type Store = {
   subscribe: (fn: any) => () => void
 }
 export type Reducer<T> = (x: T, y: Action) => T
-export type CreateStore<T> = (x: Reducer<T>, y: T) => Store
+export type CreateStore<T> = (x: Reducer<T>, y: T, z?: any) => Store
 export type InitState = {
   user: {
     name: string;

@@ -29,9 +29,12 @@ export const Provider = ({ store, children }: { store: Store, children: any}) =>
   return <Context.Provider value={store}>{children}</Context.Provider>
 }
 
-export const createStore: CreateStore<InitState> = (_reducer, _init) => {
+export const createStore: CreateStore<InitState> = (_reducer, _init, enhancer) => {
   reducer = _reducer;
   state = _init;
+  if(enhancer) {
+    store.dispatch = enhancer(createStore)(_reducer, _init).dispatch
+  }
   return store
 }
 
@@ -60,4 +63,26 @@ export const connect: Connect = (mapStateToProps, mapDispatchToProps?: MapDispat
   }, [mapStateToProps])
 
   return <Component {...props} {...stateProps} {...dispatchProps} />
+}
+
+export const applyMiddleware = (...middlewares: any[]) => (_createStore: CreateStore<InitState>) => (_reducer: Reducer<InitState>, _init: InitState) => {
+  let store = _createStore(_reducer, _init)
+  let dispatch = store.dispatch
+
+  const middlewareAPI = {
+    getState: store.getState,
+    dispatch: (action: any) => dispatch(action)
+  }
+  const chain = middlewares.map(middleware => middleware(middlewareAPI))
+  dispatch = compose(...chain)(store.dispatch)
+  return {
+    ...store,
+    dispatch
+  }
+}
+
+let compose = (...middlewares: any) => {
+  return (dispatch: any) => {
+    return middlewares.reduceRight((init: any, current: any) => current(init), dispatch)
+  }
 }
