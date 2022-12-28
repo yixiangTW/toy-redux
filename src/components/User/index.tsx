@@ -1,4 +1,4 @@
-import { connect } from '../../Redux'
+import { connect } from '../../ReactRedux'
 import './style.css'
 
 const userStateToProps = (state: any) => {

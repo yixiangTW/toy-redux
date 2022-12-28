@@ -1,4 +1,4 @@
-import { connect } from "../../Redux";
+import { connect } from "../../ReactRedux";
 import Prism from "prismjs";
 import 'prismjs/themes/prism.css';
 import "./style.css";

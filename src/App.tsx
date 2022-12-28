@@ -1,4 +1,4 @@
-import { Provider } from './Redux'
+import { Provider } from './ReactRedux'
 import ModifyUser from './components/ModifyUser'
 import User from './components/User'
 import Group from './components/Group'
