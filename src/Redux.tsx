@@ -7,7 +7,8 @@ let listeners: any = [];
 const store: Store = {
   getState: () => state,
   dispatch: (_action) => {
-    setState(reducer(state, _action))
+    setState(reducer(state, _action));
+    return _action;
   },
   subscribe: (fn) => {
     listeners.push(fn);

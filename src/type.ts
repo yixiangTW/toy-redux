@@ -1,6 +1,6 @@
 export type MapStateToProps = (x: InitState) => any
 export type Dispatch = (x: Action) => void;
-export type MapDispatchToProps = (dispatch: Dispatch) => any
+export type MapDispatchToProps = (dispatch: Dispatch, ownProps?: any) => any
 
 
 export type Connect = (mapStateToProps?: MapStateToProps, mapDispatchToProps?: MapDispatchToProps) => any

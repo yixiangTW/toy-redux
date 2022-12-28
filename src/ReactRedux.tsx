@@ -21,7 +21,7 @@ export const connect: Connect = (mapStateToProps, mapDispatchToProps?: MapDispat
   const store = useContext(Context);
   const [, reRender] = useState({})
   const stateProps = mapStateToProps ? mapStateToProps(store.getState()) : { state: store.getState()}
-  const dispatchProps = mapDispatchToProps ? mapDispatchToProps(store.dispatch) : { dispatch: store.dispatch }
+  const dispatchProps = mapDispatchToProps ? mapDispatchToProps(store.dispatch, props) : { dispatch: store.dispatch }
 
   useEffect(() => {
     return store.subscribe(() => {
